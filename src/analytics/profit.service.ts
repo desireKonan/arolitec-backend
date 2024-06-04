@@ -38,6 +38,10 @@ export class ProfitService {
     }
 
     getProfits(): Promise<any> {
-        return this.prismaService.profit_country.findMany();
+        return this.prismaService.$queryRaw`SELECT country, prefix, SUM(profit)::numeric as profit FROM profit_country GROUP BY 
+                    country, 
+                    prefix, 
+                    to_char(created_at, 'YYYY');
+        `;
     }
 }

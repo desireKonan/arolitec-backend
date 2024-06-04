@@ -1,4 +1,5 @@
 import { Profit } from "src/analytics/profit.model";
+import * as crypto from 'bcrypt';
 
 export function extractProfit(data: string): Profit {
     let row: string[] = data.split(/[^\d]/);
@@ -21,4 +22,9 @@ export function parseDataFromCsv(data: string) {
     return data.split('\r\n')
             .filter(csv => csv !== '')
             .slice(1, data.length);
+}
+
+
+export async function hashPassword(password: string): Promise<string> {
+    return (await crypto.hash(password, 12));
 }
