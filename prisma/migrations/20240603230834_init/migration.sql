@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "profit_country" ADD COLUMN     "created_at" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP;

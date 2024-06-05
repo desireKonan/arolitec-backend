@@ -1,8 +1,9 @@
-import { Controller, Get, Post, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Post, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { ApiBody, ApiConsumes, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { ProfitService } from "./profit.service";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { createReadStream } from "fs";
+import { Public } from "src/util/public.annotation";
 
 @Controller('/profit')
 @ApiTags('Profit')
@@ -40,6 +41,7 @@ export class ProfitController {
     }
 
 
+    @Public()
     @Get('/countries')
     @ApiOperation({
         summary: 'Get Profit by Country',

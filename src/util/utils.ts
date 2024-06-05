@@ -28,3 +28,7 @@ export function parseDataFromCsv(data: string) {
 export async function hashPassword(password: string): Promise<string> {
     return (await crypto.hash(password, 12));
 }
+
+export async function verifyPassword(password, hashedPassword): Promise<boolean> {
+    return (await crypto.compare(password, hashedPassword));
+}

@@ -2,6 +2,7 @@ import { Injectable } from "@nestjs/common";
 import { PrismaService } from "src/service/prisma.service";
 import { UserCommand } from "./user.command";
 import { hashPassword } from "src/util/utils";
+import { User } from "./user.data";
 
 @Injectable()
 export class UserService {
@@ -9,11 +10,13 @@ export class UserService {
         private prismaService: PrismaService
     ) {}
 
-    async getUsers() : Promise<any[]> {
+    async getUsers() : Promise<User[]> {
         return (await this.prismaService.user.findMany()).map(user => ({
             id: user.id,
             name: user.name,
             email: user.email,
+            password: user.password,
+            role: user.role,
             created_at: new Date().toISOString()
         }));
     }
@@ -25,7 +28,8 @@ export class UserService {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                password: password
+                password: password,
+                role: user.role
             }
         });
     }
@@ -40,7 +44,8 @@ export class UserService {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                password: password
+                password: password,
+                role: user.role
             }
         });
     }
@@ -57,6 +62,14 @@ export class UserService {
         return (await this.prismaService.user.findFirst({
             where: {
                 id: id
+            }
+        }));
+    }
+
+    async findUser(email: string) : Promise<any> {
+        return (await this.prismaService.user.findFirst({
+            where: {
+                email: email
             }
         }));
     }

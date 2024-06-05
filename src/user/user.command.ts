@@ -24,4 +24,11 @@ export class UserCommand {
         required: false,
     })
     password!: string;
+
+    @ApiProperty({
+        description: 'Role',
+        required: false,
+    })
+    role!: string;
+
 }

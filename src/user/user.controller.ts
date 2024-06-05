@@ -1,8 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 import { ApiBody, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { UserService } from "./user.service";
-import { User } from "./user.data";
 import { UserCommand } from "./user.command";
+import { Public } from "src/util/public.annotation";
 
 @Controller('/user')
 @ApiTags('User')
@@ -24,6 +24,7 @@ export class UserController {
     }
 
 
+    @Public()
     @Post()
     @ApiOperation({
         summary: 'Save User',
