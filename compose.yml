@@ -5,6 +5,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3015:3000"
+    volumes:
+      - /usr/src/backend/node_modules
   postgres:
     image: postgres:14-alpine
     ports:
