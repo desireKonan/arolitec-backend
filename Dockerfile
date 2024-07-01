@@ -1,17 +1,25 @@
-FROM node:20.14-alpine
+FROM node:20.14-alpine AS builder
 
-WORKDIR /usr/src/backend
+WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install glob rimraf
+COPY prisma ./prisma/
 
 RUN npm install
+
+RUN npx prisma generate
 
 COPY . .
 
 RUN npm run build
 
+FROM node:20.14-alpine
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/dist ./dist
+
 EXPOSE 3015
 
-CMD ["node", "dist/main"]
+CMD ["npm", "run", "start:prod"]
